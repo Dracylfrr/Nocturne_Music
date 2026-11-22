@@ -63,7 +63,13 @@ The self-test checks library boundaries, rejects path traversal, loads the XAML,
 
 This is a Windows application with an unsigned installer. Metadata support is strongest for MP3 ID3v2.3/v2.4. Other formats can show Unknown artist. Artwork search opens the default browser and requires the user to choose an image. Large-library performance and all Windows codec combinations have not been comprehensively tested.
 
-Automatic software updates are not implemented. A future release channel should check versioned GitHub Releases, show release notes, verify a signed installer, and let the user choose when to install.
+Version 1.1 checks Dracylfrr/Nocturne_Music for the latest stable GitHub Release at startup. Settings also has Check for updates. It compares numeric versions and offers to download and install newer releases. The installer download must match the SHA-256 digest from GitHub and the expected assembly version. No GitHub sign-in is needed for the public repository.
+ 
+After approval, the app saves preferences and a settings.before-update.json backup, closes, and starts the installer in update mode. The installer waits for the app to exit, updates its existing location, and restarts it. Updates replace only the five packaged application files. Preferences, artwork and music remain in their existing locations. Replacement failures roll back files already changed. A running Nocturne Local process blocks concurrent replacement.
+ 
+Version 1.0 requires a manual upgrade to 1.1 to receive the updater. The personal Bhumika edition has a separate release lifecycle and is not updated from this public repository. Installers are currently unsigned. SHA-256 verifies consistency with the release metadata, and does not replace publisher code signing.
+ 
+Run tests/run.ps1 after building for updater version, integrity, preservation and rollback regression checks. Future release tags must be numeric versions such as v1.2 and include an uploaded Nocturne.exe asset with GitHub digest metadata. Stage new releases as drafts, upload the installer, then publish.
 
 ## Source layout
 
